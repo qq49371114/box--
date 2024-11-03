@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpHeaders;
 import com.orhanobut.hawk.Hawk;
+import io.github.pixee.security.BoundedLineReader;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -237,7 +238,7 @@ public class FileUtils {
         try {
             in = new BufferedReader(new InputStreamReader(new FileInputStream(path), charsetName));// 读取文件
             String thisLine;
-            while ((thisLine = in.readLine()) != null) {
+            while ((thisLine = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                 jsonString.append(thisLine);
             }
         } catch (IOException e) {
@@ -502,7 +503,7 @@ public class FileUtils {
             InputStreamReader isr = new InputStreamReader(is,"UTF-8");
             BufferedReader br = new BufferedReader(isr);
             String str = "";
-            while((str = br.readLine()) != null){
+            while((str = BoundedLineReader.readLine(br, 5_000_000)) != null){
                 tv.append(str).append("\n");
             }
         } catch (IOException e) {

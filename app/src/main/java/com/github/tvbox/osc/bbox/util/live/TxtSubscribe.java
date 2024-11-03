@@ -3,6 +3,7 @@ package com.github.tvbox.osc.bbox.util.live;
 import com.github.tvbox.osc.bbox.util.LOG;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
@@ -80,16 +81,16 @@ public class TxtSubscribe {
         ArrayList<String> arrayList;
         try {
             BufferedReader bufferedReader = new BufferedReader(new StringReader(str));
-            String readLine = bufferedReader.readLine();
+            String readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
             LinkedHashMap<String, ArrayList<String>> linkedHashMap2 = new LinkedHashMap<>();
             LinkedHashMap<String, ArrayList<String>> linkedHashMap3 = linkedHashMap2;
             while (readLine != null) {
                 if (readLine.trim().isEmpty()) {
-                    readLine = bufferedReader.readLine();
+                    readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                 } else {
                     String[] split = readLine.split(",");
                     if (split.length < 2) {
-                        readLine = bufferedReader.readLine();
+                        readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                     } else {
                         if (readLine.contains("#genre#")) {
                             String trim = split[0].trim();
@@ -116,7 +117,7 @@ public class TxtSubscribe {
                                 }
                             }
                         }
-                        readLine = bufferedReader.readLine();
+                        readLine = BoundedLineReader.readLine(bufferedReader, 5_000_000);
                     }
                 }
             }
