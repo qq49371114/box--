@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class AudioWaveView extends View {
@@ -61,7 +62,7 @@ public class AudioWaveView extends View {
         paint = new Paint();
         paint.setColor(Color.RED);//字节跳动颜色
         paint.setStyle(Paint.Style.FILL);
-        random = new Random();
+        random = new SecureRandom();
 
         initRect();
     }

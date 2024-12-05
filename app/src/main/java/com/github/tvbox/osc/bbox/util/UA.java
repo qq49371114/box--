@@ -6,6 +6,7 @@ import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class UA {
@@ -5430,7 +5431,7 @@ public class UA {
             InputStream fis = App.getInstance().getAssets().open("ua.db");
             DataInputStream dis = new DataInputStream(fis);
             int len = dis.readInt();
-            int random = new Random().nextInt(len);
+            int random = new SecureRandom().nextInt(len);
             dis.skipBytes(random * 4);
             int offset = dis.readInt();
             dis.skipBytes((len - 1 - random) * 4 + offset);
