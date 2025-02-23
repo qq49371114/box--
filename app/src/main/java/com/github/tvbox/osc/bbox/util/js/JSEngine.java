@@ -16,6 +16,8 @@ import com.github.tvbox.quickjs.JSObject;
 import com.github.tvbox.quickjs.QuickJSContext;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import org.json.JSONObject;
 
@@ -304,7 +306,7 @@ public class JSEngine {
                         if(parent.isEmpty()){
                             return child;
                         }
-                        url = new URL(new URL(parent),child);
+                        url = Urls.create(Urls.create(parent, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), child, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                         q= url.toExternalForm();
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
