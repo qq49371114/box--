@@ -6,6 +6,7 @@ import com.github.tvbox.osc.bbox.bean.Epginfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.github.pixee.security.BoundedLineReader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ public class EpgUtil {
             BufferedReader br = new BufferedReader(inputStreamReader);//使用字符高效流
             String line;
             StringBuilder builder = new StringBuilder();
-            while ((line = br.readLine())!=null){
+            while ((line = BoundedLineReader.readLine(br, 5_000_000))!=null){
                 builder.append(line);
             }
             br.close();

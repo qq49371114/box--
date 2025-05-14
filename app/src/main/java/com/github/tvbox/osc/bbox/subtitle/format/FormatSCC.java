@@ -32,6 +32,7 @@ import com.github.tvbox.osc.bbox.subtitle.model.Style;
 import com.github.tvbox.osc.bbox.subtitle.model.Subtitle;
 import com.github.tvbox.osc.bbox.subtitle.model.Time;
 import com.github.tvbox.osc.bbox.subtitle.model.TimedTextObject;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class FormatSCC implements TimedTextFileFormat {
 
 			lineCounter++;
 			// the file must start with the type declaration
-			if (!br.readLine().trim().equalsIgnoreCase("Scenarist_SCC V1.0")) {
+			if (!BoundedLineReader.readLine(br, 5_000_000).trim().equalsIgnoreCase("Scenarist_SCC V1.0")) {
 				// this is a fatal parsing error.
 				throw new FatalParsingException(
 						"The fist line should define the file type: \"Scenarist_SCC V1.0\"");
@@ -81,7 +82,7 @@ public class FormatSCC implements TimedTextFileFormat {
 				createSCCStyles(tto);
 
 				tto.warnings += "Only data from CC channel 1 will be extracted.\n\n";
-				line = br.readLine();
+				line = BoundedLineReader.readLine(br, 5_000_000);
 
 				while (line != null) {
 					line = line.trim();
@@ -392,7 +393,7 @@ public class FormatSCC implements TimedTextFileFormat {
 
 					}
 					// end of while
-					line = br.readLine();
+					line = BoundedLineReader.readLine(br, 5_000_000);
 
 				}
 
