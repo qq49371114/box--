@@ -52,6 +52,7 @@ import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
 import com.squareup.picasso.Picasso;
+import io.github.pixee.security.ObjectInputFilters;
 import me.jessyan.autosize.utils.AutoSizeUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -463,6 +464,7 @@ public class DetailActivity extends BaseActivity {
                         oos.flush();
                         oos.close();
                         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+                        ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
                         previewVodInfo = (VodInfo) ois.readObject();
                     } catch (Exception e) {
                         e.printStackTrace();
